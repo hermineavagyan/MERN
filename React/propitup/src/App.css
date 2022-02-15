@@ -1,0 +1,31 @@
+.App {
+  text-align: center;
+}
+
+.identity{
+  
+  font-size: 30px;
+  font-weight: bold;
+  text-align: justify;
+ 
+
+}
+.personCard{
+  text-indent: 100px;
+  margin-left: 30px;
+  text-align: justify;
+  
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
