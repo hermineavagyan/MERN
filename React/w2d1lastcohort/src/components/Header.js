@@ -8,7 +8,7 @@ const Header = (props)=>{
     
     return (
         <div>
-            Header
+            <h1>Metallica</h1>
         </div>
     )
 }

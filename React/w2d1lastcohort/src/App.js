@@ -12,6 +12,8 @@ function App() {
       email:"metallica@aol.com",
       city: "San Francisco",
       state:"CA",
+      netWorth: 30000000,
+      likes: 0
     },
     //index 1
     {
@@ -19,6 +21,8 @@ function App() {
       email:"theRipper@aol.com",
       city: "San Francisco",
       state:"CA",
+      netWorth: 45000000,
+      likes: 0
     },
     //index 2
     {
@@ -26,6 +30,8 @@ function App() {
       email:"cantDrum@aol.com",
       city: "San Francisco",
       state:"CA",
+      netWorth: 85500000,
+      likes: 0
     }
   ];
 
@@ -59,7 +65,7 @@ function App() {
     state = {coolObject[2].state}
     />  */}
 
-<Child name = {james.name}
+{/* <Child name = {james.name}
     email = {james.email}
     city = {james.city}
     state = {james.state}
@@ -74,7 +80,23 @@ function App() {
     email = {ulrich.email}
     city = {ulrich.city}
     state = {ulrich.state}
+    /> */}
+    <div className='childdiv'>
+{
+  coolObject.map((object,index)=>(
+   
+    <Child 
+      key = {index}
+      name = {object.name}
+      email = {object.email}
+      city = {object.city}
+      state = {object.state}
+      likes = {object.likes}
+      netWorth = {object.netWorth}
     />
+  ))
+}
+</div>
 
     </div>
   );
