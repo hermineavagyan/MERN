@@ -31,6 +31,9 @@ function App() {
   return (
 
     <div className="App">
+    {/* <PersonCard person = {person[0]}></PersonCard>
+    <PersonCard person = {person[1]}></PersonCard>
+    <PersonCard person = {person[2]}></PersonCard> */}
     {/* <PersonCard 
       firstName = {person[0].firstName}
       lastName = {person[0].lastName}
