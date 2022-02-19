@@ -11,6 +11,7 @@ const Form = (props)=>{
     const[confirmPasswordError, setConfirmPasswordError] = useState("");
 
     const handleFirstName = (e)=>{
+        e.preventDefault();
         setFirstName(e.target.value);
 
         if (e.target.value.length < 1){
@@ -75,10 +76,10 @@ const Form = (props)=>{
     return (
 
         <div>
-            <form>
-            <div>
+            <form onSubmit={()=>{}}>
+            <p className="inputDataDivStyle">
                 <label>First Name </label>
-                <input onChange ={(e)=> handleFirstName(e)
+                <input className="inputBox" onChange ={(e)=> handleFirstName(e)
                 } type = "text"/>
                 {
                     firstNameError?
@@ -90,8 +91,8 @@ const Form = (props)=>{
                     <p> First name should be at least 2 characters</p>
                     :null
                 } */}
-            </div>
-            <div>
+            </p>
+            <p className="inputDataDivStyle">
                 <label>Last Name </label>
                 <input onChange={(e) =>handleLastName(e)} type = "text"/>
                 {
@@ -99,8 +100,8 @@ const Form = (props)=>{
                     <p>{lastNameError}</p>
                     :null
                 }
-            </div>
-            <div>
+            </p>
+            <p className="inputDataDivStyle">
                 <label>Email </label>
                 <input  onChange = {(e) => handleEmail(e)} type = "email"/>
                 {
@@ -108,8 +109,8 @@ const Form = (props)=>{
                     <p>{emailError}</p>
                     :null
                 }
-            </div>
-            <div>
+            </p>
+            <p className="inputDataDivStyle">
                 <label>Password </label>
                 <input onChange = {(e) => handlePassword(e)} type = "password"/>
                 {
@@ -117,8 +118,8 @@ const Form = (props)=>{
                     <p>{passwordError}</p>
                     :null
                 }
-            </div>
-            <div>
+            </p>
+            <p className="inputDataDivStyle">
                 <label>Confirm Password </label>
                 <input onChange = {(e) => handleConfirmPassword(e)} type = "password"/>
                 {
@@ -126,7 +127,7 @@ const Form = (props)=>{
                     <p>{confirmPasswordError}</p>
                     :null
                 }
-            </div>
+            </p>
             </form>
         </div>
     )
