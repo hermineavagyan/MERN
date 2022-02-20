@@ -64,13 +64,20 @@ class Pile extends Deck{
     }
 
     //insert a card in a specific place in the pile
-    insertAt(card, index){
-        card = new Card({ suit: '', face: '', value: null})
-        card = this.deck[index]
-        for (let i = index; i < this.deck.length - 1; i++){
-            this.deck[i +1] = this.deck[i] 
+    insertAt(deck,card, index){
+        //create a new array with one more length than the given deck
+        const newDeck = [deck.length +1]
+        
+        for (let i = 0; i < index; i++){
+            newDeck[i] = deck[i] 
+        
         }
-        return card
+        newDeck[index] = card
+        console.log[newDeck[index]]
+        for (let i = index +1; i < deck.length; i++){
+            newDeck [i] = deck[i-1]
+        }
+        return newDeck
     }
 
     //search through this pile of cards and return the index of the card
@@ -93,6 +100,6 @@ let hermineHand = cardDeck.makeNewPile(5, "hermine")
 //console.log(hermineHand)
 
 let card = new Card('Hearts','J', 11 )
-hermineHand.insertAt(card, 4)
+hermineHand.insertAt(hermineHand, card, 5)
 console.log(hermineHand)
 
