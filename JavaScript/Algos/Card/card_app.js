@@ -66,16 +66,16 @@ class Pile extends Deck{
     //insert a card in a specific place in the pile
     insertAt(deck,card, index){
         //create a new array with one more length than the given deck
-        const newDeck = [deck.length +1]
+        const newDeck = [this.deck.length +1]
         
         for (let i = 0; i < index; i++){
-            newDeck[i] = deck[i] 
+            newDeck[i] = this.deck[i] 
         
         }
         newDeck[index] = card
         console.log[newDeck[index]]
-        for (let i = index +1; i < deck.length; i++){
-            newDeck [i] = deck[i-1]
+        for (let i = index +1; i < this.deck.length; i++){
+            newDeck [i] = this.deck[i-1]
         }
         return newDeck
     }
