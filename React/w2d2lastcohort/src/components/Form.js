@@ -6,27 +6,40 @@ const Form = (props)=>{
 
     //Our pices of state. They are being altered below with our synthetic events
     const {studentList,setStudentList} = props;
+
     const[name, setName] = useState("");
     const[favStack, setFavStack] = useState("");
     const[tallClub, setTallClub] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("")
 
     const submitHandler = (e)=>{
         e.preventDefault(e);
-        setStudentList([...studentList, 
-        {
-            name: name,
-            favStack:favStack,
-            tallClub: tallClub
+        if(name.length < 3 || favStack ===""){
+            setErrorMsg("Your form has unresolved propblems!");
         }
-    ])
-        setName("");
-        setTallClub(false);
-        setFavStack("");
+        else{
+            setStudentList([...studentList, 
+                {
+                    name: name,
+                    favStack:favStack,
+                    tallClub: tallClub
+                }
+            ])
+            setName("");
+            setTallClub(false);
+            setFavStack("");
+            setErrorMsg("");
+        }
     }
 
     return(
         <div>
             <h1>Add a student</h1>
+            {
+                errorMsg?
+                <p>{errorMsg}</p>
+                :null
+            }
             <form onSubmit={submitHandler} style ={{width:"25%", textAlign:"left", margin: "auto"}}>
                 {
                     name.length > 0 && name.length < 3?

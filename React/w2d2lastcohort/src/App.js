@@ -7,12 +7,20 @@ import Header from './components/Header';
 
 function App() {
   const [studentList, setStudentList] = useState([]);
+  const [themeMode, setThemeMode] = useState({
+    style: "day",
+    text: "day mode"
+  }
+  )
+
 
   return (
-    <div className="App">
-      <Header/>
+    <div className={themeMode.style} style = {{height: "100vh"}}>
+      <Header themeMode = {themeMode} setThemeMode = {setThemeMode}/>
       <Form studentList = {studentList} setStudentList = {setStudentList}/>
-      <Display studentList = {studentList}/>
+      <Display studentList = {studentList} setStudentList = {setStudentList}/>
+
+      <p>{themeMode.text}</p>
     </div>
   );
 }
