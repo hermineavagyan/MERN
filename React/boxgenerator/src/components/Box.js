@@ -20,6 +20,7 @@ const boxHandler = (e) =>{
     }
     
 ])
+//setting back to inintial values
     setColor ("");
     setDimensions(0);
 }
