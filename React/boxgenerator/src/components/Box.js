@@ -14,8 +14,7 @@ const boxHandler = (e) =>{
         {
         color: color,
         dimensions: dimensions + "px"
-        // dimensionsHeigt: dimensions.height,
-        // dimensionsWidth: dimensions.width
+        
         
     }
     
