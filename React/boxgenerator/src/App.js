@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   const [boxList, setBoxList] = useState ([]);
   const [color, setColor] = useState();
-  const [dimensions, setDimensions] = useState(0);//{width:0, height: 0});
+  const [dimensions, setDimensions] = useState(0);
   
   return (
     <div className="App">
@@ -16,8 +16,8 @@ function App() {
       setBoxList = {setBoxList}
       // height = {dimensions.height}
       // width = {dimensions.width}
-      // setDimensionsHeight = {setDimensions.height}
-      // setDimensionsWidth = {setDimensions.width}
+       dimensions = {dimensions}
+      setDimensions = {setDimensions}
     />
     </div>
   );

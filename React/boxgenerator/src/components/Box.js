@@ -13,7 +13,9 @@ const boxHandler = (e) =>{
     setBoxList([...boxList,
         {
         color: color,
-        dimensions: dimensions
+        dimensions: dimensions + "px"
+        // dimensionsHeigt: dimensions.height,
+        // dimensionsWidth: dimensions.width
         
     }
     
@@ -31,7 +33,10 @@ const boxHandler = (e) =>{
             </p>
     <p>
             <label htmlFor=''>Add Dimensions</label>
-            <input onChange = {(e)=>setDimensions(e.target.value)} name = "dimensions" type = "number" value = {dimensions}/>
+            <input onChange = {(e)=>{
+                console.log(e.target.value)
+                setDimensions(e.target.value)}} name = "dimensions" type = "number" value={dimensions}/>
+
     </p>
     
     <p> 
@@ -43,7 +48,7 @@ const boxHandler = (e) =>{
                 {
                 boxList.map((box, index)=> (
                     <div style = {{backgroundColor: box.color, 
-                    width: "100px", height: "100px", margin: "30px" }
+                    width: box.dimensions, height: box.dimensions, margin: "30px" }
                     }
                     key={index}>
                     
