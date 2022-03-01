@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 const Display = (props) => {
@@ -10,10 +10,32 @@ const Display = (props) => {
         setTodoList(todoList.filter((todo, index) => todo.id !==idFromBelow))
     }
 
-    const handleCompleted = (todo)=>{
-        todo.markedDelete = !todo.markedDelete;
-        setTodoList([...todoList])
+    const handleCompleted = (todoFromBelow)=>{
+        
+        let updateTodos = todoList.map((todo)=>{
+            if(todo === todoFromBelow){
+                let newTodo = {...todo}
+                newTodo.markedDelete = !todo.markedDelete;
+                return newTodo;
+            }
+            else{
+                return todo;
+            }
+            
+
+        })
+        setTodoList(updateTodos);
+        
     }
+    useEffect(()=>{
+        const data = localStorage.getItem("my-todo-list");
+        if (data){
+            setTodoList(JSON.parse(data));
+        }
+    },[])
+    useEffect(()=>{
+        localStorage.setItem("my-todo-list", JSON.stringify(todoList));
+});
     const styled = (markedDelete)=>{
         if (markedDelete){
             return "completed"
