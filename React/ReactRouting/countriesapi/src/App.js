@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import DisplayAll from './components/DisplayAll';
 import DisplayOne from './components/DisplayOne';
 import Home from './views/Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
     <Routes>
     <Route path = "/" element = {<Home/>}></Route>
     <Route path = "/country/:countryCode" element = {<DisplayOne/>}></Route>
+    <Route path = "/country/:countryCode/:rating" element = {<DisplayOne/>}></Route>
+    <Route path = "/country/:countryCode/:rating/:review" element = {<DisplayOne/>}></Route>
     
     </Routes>
      

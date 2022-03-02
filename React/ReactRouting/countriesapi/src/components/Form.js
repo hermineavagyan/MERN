@@ -20,7 +20,8 @@ const Form = (props) =>{
         <div>
             <form onSubmit = {submitHandler}>
                 <h1>Country App</h1>
-                <select
+                <select 
+                className="form-control w-25 mx-auto text-center my-3 border border-3"
                 onChange={(e) =>setRegionSelector(e.target.value)}>
                     <option value = "" defaultValue>Select a Country </option>
                     <option value = "EU" name = "regionSelector">European Union</option>
@@ -29,7 +30,7 @@ const Form = (props) =>{
                     <option value = "SAARC" name = "regionSelector">South Asian Association for Coop</option>
                     <option value = "PA" name = "regionSelector">Pacific Aliance</option>
                 </select>
-                <button>Show countries</button>
+                <button className="btn btn-primary m-1">Show countries</button>
             </form>
         </div>
     )
