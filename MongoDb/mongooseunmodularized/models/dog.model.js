@@ -15,3 +15,5 @@ const DogSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 const DogModel = mongoose.model("Dog", DogSchema);
+
+module.exports = DogModel;
