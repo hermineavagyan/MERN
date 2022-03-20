@@ -19,13 +19,14 @@ const DisplayOne = (props) =>{
             })
     },[id])
     const deleteAuthor = ()=>{
-        axios.delete(`http://localhost:8000/api/movies/${id}`)
+        axios.delete(`http://localhost:8000/api/authors/${id}`)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                navigate("/")
+                navigate("/");
                 
             })
+           
             .catch((err) => console.log(err))
 
     }
@@ -38,7 +39,15 @@ const DisplayOne = (props) =>{
             <Link to={"/"}>Home</Link>
                     <p>Quote: {author.quote}</p>
                     <p>Year of Birth: {author.yearOfBirth}</p>
-                    <p>Likes: {author.likes}</p>
+
+                    <div> 
+                    {
+                        author.likes?
+                        <p>Likes: {author.likes}</p>
+                        : <p>This author does not have any likes yet</p>
+                    }
+                    </div>
+                    
                     <div> 
                     {
                         author.kidFriendly?
@@ -46,7 +55,7 @@ const DisplayOne = (props) =>{
                         : <p>Not a kid friendly author</p>
                     }
                     </div>
-                    <Link to={`/author/edit/${author._id}`}>Edit</Link>
+                    <Link to={`/author/edit/${author._id}`}><button>Edit</button></Link>
                     <button onClick={deleteAuthor}>Delete</button>
                     
         </div>

@@ -8,7 +8,7 @@ const Create = (props) => {
     const [lastName, setLastName] = useState("");
     const [genre, setGenre] = useState("");
     const [quote, setQuote] = useState("");
-    const [likes, setLikes] = useState("");
+    const [likes, setLikes] = useState(0);
     const [kidFriendly, setKidFriendly] = useState(false);
     const [yearOfBirth, setYearOfBirth] = useState(0);
     const [errors, setErrors] = useState({});
@@ -43,8 +43,9 @@ const Create = (props) => {
 
     return (
         <div>
+         <Link to={"/"}>Home</Link>
         <header>Create new Author
-        <Link to={"/"}>Home</Link>
+       
         </header>
         <form onSubmit={submitHandler}>
                 <div>

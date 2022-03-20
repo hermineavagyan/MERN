@@ -27,7 +27,7 @@ const AuthorSchema = new mongoose.Schema({
         required: [true, "A genre is required!!!"],
         enum:[
             "Tragedy",
-            "Childern's Literature",
+            "Children's Literature",
             "Fictional Prose",
             "Fiction"
         ]
@@ -35,7 +35,7 @@ const AuthorSchema = new mongoose.Schema({
     quote: {
         type: String
     },
-    likes: {
+    rating: {
         type: Number
     },
     kidFriendly:{
@@ -44,7 +44,7 @@ const AuthorSchema = new mongoose.Schema({
     },
     yearOfBirth: {
         type: Number,
-        min: [1, "An author cannot have a negative year of birth!"]
+        min: [1, "An author's birth year cannot be 0 or a negative number!"]
     }
     //_id is also created every time we create a new author/document
 
