@@ -1,5 +1,6 @@
 //firstName, lastName, quote
 const mongoose = require("mongoose");
+const uniqueValidator = require('mongoose-unique-validator');
 
 const AuthorSchema = new mongoose.Schema({
     firstName: {
@@ -10,7 +11,7 @@ const AuthorSchema = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        //unique: [true, "Last name should be unique"],
+        unique: [true, "Last name should be unique"],
     
         
         //partialFilterExpression: {lastName: {$type: "string"}},
@@ -51,5 +52,6 @@ const AuthorSchema = new mongoose.Schema({
 }, {timestamps: true})
 
 const Author = mongoose.model("Author", AuthorSchema);
+AuthorSchema.plugin(uniqueValidator, {message: 'No duplicate values are allowed for last name, {VALUE} is not unique!!!'})
 
 module.exports = Author;

@@ -9,29 +9,23 @@ module.exports = {
                 res.json(newAuthor)
             })
             .catch((err)=>{
-                //console.log("Something went wrong in create New Author");
-                //We set the response status of 400 to 
-                //display our err, which is the rejection of our promise.
-
-            //A 400 status means our client is talking 
-                //to our server just fine, but the client isn't sending good info.
-
-            //This is how we will eventually display 
-                //our validations from the server in react!
-               
-                    const errString = err.toString();
-                    if (errString.includes("E11000")) {
-                    return res.status(404).json({ err: 'That field is already in use!' })}
-                    else{
-                        res.status(400).json(err)
-                    }
-                });
-                
+                console.log("Something went wrong in create New Author");
+                res.status(400).json(err)
                 //res.status(400).json({message: 'Error occured', errors: err})
+                    // const errString = err.toString();
+                    // if (errString.includes("E11000")) {
+                    // return res.status(404).json({ err: 'That field value is already in use!' })}
+                    // else{
+                    //     res.status(400).json(err)
+                    // }
+                })
+                
+                //
             
     },
     getAllAuthors: (req, res) =>{
-        Author.find({}).sort({"lastName": 1})
+        Author.find({}).collation({ locale: "en" }).sort({ name: 1 })
+        //Author.find({}).sort({"lastName": 1})
             .then((allAuthors) => {
                 console.log(allAuthors);
                 res.json(allAuthors);

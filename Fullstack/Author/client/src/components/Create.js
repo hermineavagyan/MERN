@@ -48,7 +48,7 @@ const Create = (props) => {
        
         </header>
         <form onSubmit={submitHandler}>
-                <div>
+                <div className='form-fields'>
                     <label>First Name</label>
                     <input onChange={(e) => setFirstName(e.target.value)} value={firstName}  type="text" />
                     {
@@ -58,7 +58,7 @@ const Create = (props) => {
                     }
                 
                 </div>
-                <div>
+                <div className='form-fields'>
                     <label>Last Name</label>
                     <input onChange={(e) => setLastName(e.target.value)} value={lastName}  type="text" />
                     {
@@ -67,7 +67,7 @@ const Create = (props) => {
                         :null
                     }
                 </div>
-                <div>
+                <div className='form-fields' >
                     <select onChange={(e) => setGenre(e.target.value)} value={genre} name="genre" >
                         <option defaultValue>Select a Genre</option>
                         
@@ -83,16 +83,16 @@ const Create = (props) => {
                         :null
                     }
                 </div>
-                <div>
+                <div className='form-fields'>
                     <label>Quote</label>
                     <input onChange={(e) => setQuote(e.target.value)} value={quote}  type="text" />
                 </div>
 
-                <div>
+                <div className='form-fields'>
                     <label>Number of likes</label>
                     <input onChange={(e) => setLikes(e.target.value)} value={likes}  type="number" />
                 </div>
-                <div>
+                <div className='form-fields'>
                     <label>Kid Friendly?</label>
                     <input onChange={(e) => setKidFriendly(e.target.checked)} checked={kidFriendly} type="checkbox" />
                     {
@@ -103,7 +103,7 @@ const Create = (props) => {
                 </div>
 
 
-                <div>
+                <div className='form-fields'>
                     <label>Year of Birth</label>
                     <input onChange={(e) => setYearOfBirth(e.target.value)} value={yearOfBirth}  type="number" />
                     {
@@ -113,7 +113,7 @@ const Create = (props) => {
                     }
                 </div>
                 
-                <button>Add an author!</button>
+                <button className='submit-input'>Add an author!</button>
         </form>
 
         </div>

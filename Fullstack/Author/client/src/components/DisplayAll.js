@@ -84,8 +84,8 @@ const AllAuthors = (props) => {
         
 <div>
             <header >
-                <h3>Poeple Who Changed the World</h3>
-                <Link to={"/author/new"}>Create A New Author</Link>
+                <h4>Poeple Who Changed the World</h4>
+                <Link to={"/author/new"}><h6>Create A New Author</h6></Link>
             </header>
             <table style={{margin:"auto", border:"1px solid black"}}>
             <thead style={{backgroundColor:"lightgreen", color:"black"}}>
@@ -147,6 +147,7 @@ const AllAuthors = (props) => {
                     <Link to={`/author/edit/${author._id}`}><button>Edit </button> </Link>
                     <button onClick={()=>deleteAuthor(author._id)}> Delete</button>
                     <Counter>Like</Counter>
+                
                     </p>
                     </td>
                 </tr>))

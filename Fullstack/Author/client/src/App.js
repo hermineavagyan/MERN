@@ -6,6 +6,7 @@ import Create from './components/Create';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Update from './components/Update';
 
+
 function App() {
 
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path = "/author/:id" element = {<DisplayOne/>}/>
           <Route path = "/author/new" element = {<Create/>}/>
           <Route path = "/author/edit/:id" element = {<Update/>}/>
+        
           {/* <Route path = "/author/:id/:likes" element = {<DisplayOne/>}></Route> */}
 
         </Routes>
