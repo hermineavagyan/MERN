@@ -16,8 +16,8 @@ const getCitiesData  = async() => {
         method: 'get',
         baseURL:'https://wft-geo-db.p.rapidapi.com/v1/geo/countries',
         headers: {
-            'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-            'X-RapidAPI-Key': '82b0959f6emsh5ef9c398b4a167ep1376a4jsnd8d687106191'
+            'xxxxx': 'xxxx',
+            'xxxxx': 'xxxx'
           }
     }
     try {
