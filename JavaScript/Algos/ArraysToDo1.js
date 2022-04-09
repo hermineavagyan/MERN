@@ -6,6 +6,7 @@ const pushFront =  (val, array) =>{
     }
     array[0] = val;
     return array;
+    
 
 }
 const a= [1,12,23,74,85]
