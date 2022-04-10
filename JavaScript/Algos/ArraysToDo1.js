@@ -28,7 +28,7 @@ const b= [1,12,23,74,85]
 
 console.log("The number will be : "  + popFront(b))
 //---------------------------------------------
-//Insert a given value at a given index 
+ //Insert a given value at a given index 
 	const insertAt =  (arr, index, val) =>{
         let temp = arr[index]
         arr[index] = val
@@ -44,84 +44,88 @@ console.log("The number will be : "  + popFront(b))
 const c= [1,12,23,74,85]
 
 console.log("The array will be : "  + insertAt(c, 2, 7))
-//---------------------------------------------------
-//Remove the element at a given index
+ //---------------------------------------------------
+ //Remove the element at a given index
 
-const removeAt = (array, index)=>{
-    if(index >=array.length || index < 0){
-        console.log("Index out of bound")
-        return null;
-    }
-    let value = array[index]
-    for (let i = index+1; i <=array.length; i++){
-        array[i-1] = array[i]
-    }
-    array.pop();
-    console.log(array)
-    return value;
-}
-const d= [11,132,63,54,855]
+// const removeAt = (array, index)=>{
+//     if(index >=array.length || index < 0){
+//         console.log("Index out of bound")
+//         return null;
+//     }
+//     let value = array[index]
+//     for (let i = index+1; i <=array.length; i++){
+//         array[i-1] = array[i]
+//     }
+//     array.pop();
+//     console.log(array)
+//     return value;
+// }
+// const d= [11,132,63,54,855]
 
-console.log("The value to be removed will be : "  + removeAt(d, 6))
-console.log("The value to be removed will be : "  + removeAt(d, 3))
-//---------------------------------------------------------------------
-//Swap Pairs
+// console.log("The value to be removed will be : "  + removeAt(d, 6))
+// console.log("The value to be removed will be : "  + removeAt(d, 3))
+// //---------------------------------------------------------------------
+// //Swap Pairs
 
-const swapPairs = (arr)=>{
-    if (arr.length/2 !==0){
-        for (let i = 0; i < arr.length-2; i ++){
-            let temp = arr[i]
+// const swapPairs = (arr)=>{
+//     if (arr.length/2 !==0){
+//         for (let i = 0; i < arr.length-2; i ++){
+//             let temp = arr[i]
     
-            arr[i] = arr[i+1]
-            arr[i+1]  = temp;
+//             arr[i] = arr[i+1]
+//             arr[i+1]  = temp;
     
-            i++;
-        }
-    }else {
-        for (let i = 0; i < arr.length-1; i ++){
-            let temp = arr[i]
+//             i++;
+//         }
+//     }else {
+//         for (let i = 0; i < arr.length-1; i ++){
+//             let temp = arr[i]
     
-            arr[i] = arr[i+1]
-            arr[i+1]  = temp;
+//             arr[i] = arr[i+1]
+//             arr[i+1]  = temp;
     
-            i++;
-        }
+//             i++;
+//         }
         
-    }
-    return arr;
+//     }
+//     return arr;
     
-}
-const e = [1,12,23,74,26]
+// }
+// const e = [1,12,23,74,26]
 
-console.log("The array will be : "  + swapPairs(e))
-//---------------------------------------------------
+// console.log("The array will be : "  + swapPairs(e))
+// //---------------------------------------------------
 
-//Given a sorted array, remove duplicate values.
-const removeDuplicates = (arr)=>{
-    if (arr.length === 0){
-        return;   
-    }
-    let lastUniqueVal = arr[0];
-    let nextUniqueIndex = 1;
+// //Given a sorted array, remove duplicate values.
+// const removeDuplicates = (arr)=>{
+//     if (arr.length === 0){
+//         return;   
+//     }
+//     let lastUniqueVal = arr[0];
+//     let nextUniqueIndex = 1;
 
-    for (let i = 1; i< arr.length; i++){
-        if(arr[i] !== lastUniqueVal){
-            lastUniqueVal = arr[i];
-            arr[nextUniqueIndex] = arr[i];
-            nextUniqueIndex ++;
-        }
-       
-    }
+//     for (let i = 1; i< arr.length; i++){
+//         if(arr[i] !== lastUniqueVal){
+//             lastUniqueVal = arr[i];
+//             arr[nextUniqueIndex] = arr[i];
+//             nextUniqueIndex ++;
+//         }
+
+//     }
     
-    arr.length = nextUniqueIndex;
+//     arr.length = nextUniqueIndex;
 
     
-    return arr;
+//     return arr;
 
-}
-const f = [0,0,1,1,1,2,2,2,3,3,4]
+// }
+// const f = [0,0,1,1,1,2,2,2,3,3,4]
 
-console.log("The array will be : "  + removeDuplicates(f))
+// console.log("The array will be : "  + removeDuplicates(f))
+//----------------------------------------------
+
+
+
 
 
 
