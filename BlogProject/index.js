@@ -5,9 +5,11 @@ const app = new express();
 const ejs = require('ejs')
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_database',
+mongoose.connect('mongodb://127.0.0.1:27017/my_database',
                     {useNewUrlParser:true})
 
 app.get('/', (req, res)=>{
@@ -29,6 +31,10 @@ app.get('/post', (req, res)=>{
 })
 app.get('/posts/new',(req, res)=>{
     res.render('create')
+})
+app.post('/posts/store', (req, res)=>{
+    console.log(req.body)
+    res.redirect('/')
 })
 
 app.listen(4000, ()=>{
