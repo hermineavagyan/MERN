@@ -21,7 +21,10 @@ class Register extends Component {
             email,
             password
         };
-        //console.log(user)
+        this.register(user)
+    }; 
+    
+    register = (user) =>{
         fetch('http://localhost:8080/signup', {
             method: "POST",
             headers: {
@@ -35,6 +38,7 @@ class Register extends Component {
         })
         .catch(err => console.log(err))
     };
+    
     render(){
 
         const {name, email, password} = this.state;
