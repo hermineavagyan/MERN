@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 
-class Register extends Component {
+class Login extends Component {
     constructor(){
         super()
         this.state = {
-            name: "",
             email: "",
             password: "",
             error: "",
-            open: false
+            redirectToReferer: false
         }
     }
     onChangeHandler = (name) => (e)=>{
@@ -17,31 +16,25 @@ class Register extends Component {
     }
     submitHandler = e =>{
         e.preventDefault();
-        const {name, email, password} = this.state;
+        const {email, password} = this.state;
         const user = {
-            name,
             email,
             password
         };
-        this.register(user)
+        this.login(user)
         .then(data => {
             if(data.error){
                 this.setState({error: data.error})
             }
             else {
-                this.setState({
-                    error: "",
-                    name: "",
-                    email: "",
-                    password: "",
-                    open: true
-                })
+                //authenticate the user
+                //redirect
             }
         })
     }; 
     
-    register = (user) =>(
-        fetch('http://localhost:8080/signup', {
+    login = (user) =>(
+        fetch('http://localhost:8080/signin', {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -55,17 +48,9 @@ class Register extends Component {
         .catch(err => console.log(err))
     );
 
-    registerFormHandler = (name, email, password)=>(
+    loginFormHandler = (email, password)=>(
         <form>
-                    <div className='form-group'>
-                        <label className='text-muted'>Name</label>
-                        <input 
-                            onChange={this.onChangeHandler("name")} 
-                            type = "text" 
-                            className='form-control'
-                            value = {name}
-                        />
-                    </div>
+                    
                     <div className='form-group'>
                         <label className='text-muted'>Email</label>
                         <input 
@@ -91,26 +76,22 @@ class Register extends Component {
     
     render(){
 
-        const {name, email, password, error, open} = this.state;
+        const {email, password, error} = this.state;
 
         return (
             <div className='container'>
-                <h2 className='mt-5 mb-5'>Register</h2>
+                <h2 className='mt-5 mb-5'>Login</h2>
 
                 <div 
                     className='alert alert-danger' 
-                    style = {{display: error? "" : "none"}}>{error}
+                    style = {{display: error? "" : "none"}}>
+                    {error}
                 </div>
 
-                <div 
-                    className='alert alert-info' 
-                    style = {{display: open? "" : "none"}}>
-                    Account is successfully created. Please login.
-                </div>
-                {this.registerFormHandler(name, email, password)}
+                {this.loginFormHandler(email, password)}
                 
             </div>
         )
     }
 }
-export default Register;
+export default Login;
