@@ -8,9 +8,11 @@ class Register extends Component {
             email: "",
             password: "",
             error: "",
+            open: false
         }
     }
     onChangeHandler = (name) => (e)=>{
+        this.setState({error: ""})
         this.setState({[name]: e.target.value})
     }
     submitHandler = e =>{
@@ -22,9 +24,23 @@ class Register extends Component {
             password
         };
         this.register(user)
+        .then(data => {
+            if(data.error){
+                this.setState({error: data.error})
+            }
+            else {
+                this.setState({
+                    error: "",
+                    name: "",
+                    email: "",
+                    password: "",
+                    open: true
+                })
+            }
+        })
     }; 
     
-    register = (user) =>{
+    register = (user) =>(
         fetch('http://localhost:8080/signup', {
             method: "POST",
             headers: {
@@ -37,15 +53,27 @@ class Register extends Component {
             return res.json()
         })
         .catch(err => console.log(err))
-    };
+    );
     
     render(){
 
-        const {name, email, password} = this.state;
+        const {name, email, password, error, open} = this.state;
 
         return (
             <div className='container'>
                 <h2 className='mt-5 mb-5'>Register</h2>
+
+                <div 
+                    className='alert alert-primary' 
+                    style = {{display: error? "" : "none"}}>{error}
+                </div>
+
+                <div 
+                    className='alert alert-info' 
+                    style = {{display: open? "" : "none"}}>
+                    Account is successfully created. Please login.
+                </div>
+
                 <form>
                     <div className='form-group'>
                         <label className='text-muted'>Name</label>
