@@ -54,27 +54,9 @@ class Register extends Component {
         })
         .catch(err => console.log(err))
     );
-    
-    render(){
 
-        const {name, email, password, error, open} = this.state;
-
-        return (
-            <div className='container'>
-                <h2 className='mt-5 mb-5'>Register</h2>
-
-                <div 
-                    className='alert alert-primary' 
-                    style = {{display: error? "" : "none"}}>{error}
-                </div>
-
-                <div 
-                    className='alert alert-info' 
-                    style = {{display: open? "" : "none"}}>
-                    Account is successfully created. Please login.
-                </div>
-
-                <form>
+    formHandler = (name, email, password)=>(
+        <form>
                     <div className='form-group'>
                         <label className='text-muted'>Name</label>
                         <input 
@@ -105,6 +87,28 @@ class Register extends Component {
                     </div>
                     <button onClick = {this.submitHandler} className='btn btn-raised btn-primary'>Submit</button>
                 </form>
+    )
+    
+    render(){
+
+        const {name, email, password, error, open} = this.state;
+
+        return (
+            <div className='container'>
+                <h2 className='mt-5 mb-5'>Register</h2>
+
+                <div 
+                    className='alert alert-danger' 
+                    style = {{display: error? "" : "none"}}>{error}
+                </div>
+
+                <div 
+                    className='alert alert-info' 
+                    style = {{display: open? "" : "none"}}>
+                    Account is successfully created. Please login.
+                </div>
+                {this.formHandler(name, email, password)}
+                
             </div>
         )
     }
