@@ -10,6 +10,7 @@ class Login extends Component {
             password: "",
             error: "",
             redirectToReferer: false,
+            loading: false
         }
 
     };
@@ -27,6 +28,7 @@ class Login extends Component {
     }
     submitHandler = e =>{
         e.preventDefault();
+        this.setState({loading: true})
         const {email, password} = this.state;
         const user = {
             email,
@@ -36,7 +38,7 @@ class Login extends Component {
         this.login(user)
         .then(data => {
             if(data.error){
-                this.setState({error: data.error})
+                this.setState({error: data.error, loading: false})
             }
             else {
                 //authenticate the user
@@ -90,7 +92,7 @@ class Login extends Component {
     
     render(){
 
-        const {email, password, error, redirectToReferer} = this.state;
+        const {email, password, error, redirectToReferer, loading} = this.state;
         const {navigate} = this.props;
 
         if(redirectToReferer){
@@ -106,6 +108,13 @@ class Login extends Component {
                     style = {{display: error? "" : "none"}}>
                     {error}
                 </div>
+                {
+                    loading ? 
+                    (<div className="jumbotron text center">
+                        <h2>Loading...</h2>
+                    </div>)
+                    :("")
+                }
 
                 {this.loginFormHandler(email, password)}
                 
