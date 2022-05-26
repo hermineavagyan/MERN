@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {register} from '../authentication';
 
 class Register extends Component {
     constructor(){
@@ -23,7 +24,7 @@ class Register extends Component {
             email,
             password
         };
-        this.register(user)
+        register(user)
         .then(data => {
             if(data.error){
                 this.setState({error: data.error})
@@ -40,20 +41,20 @@ class Register extends Component {
         })
     }; 
     
-    register = (user) =>(
-        fetch('http://localhost:8080/signup', {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        .then (res =>{
-            return res.json()
-        })
-        .catch(err => console.log(err))
-    );
+    // register = (user) =>(
+    //     fetch('http://localhost:8080/signup', {
+    //         method: "POST",
+    //         headers: {
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(user)
+    //     })
+    //     .then (res =>{
+    //         return res.json()
+    //     })
+    //     .catch(err => console.log(err))
+    // );
 
     registerFormHandler = (name, email, password)=>(
         <form>
