@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom'
+//import { getNavigate } from "./getNavigate.js";
 
 class Login extends Component {
     constructor(){
@@ -7,12 +9,21 @@ class Login extends Component {
             email: "",
             password: "",
             error: "",
-            redirectToReferer: false
+            redirectToReferer: false,
         }
-    }
+
+    };
+    
     onChangeHandler = (name) => (e)=>{
         this.setState({error: ""})
         this.setState({[name]: e.target.value})
+    }
+    authenticate  = (jwt, next) =>{
+        if (typeof window !== "undefined"){
+            localStorage.setItem("jwt", JSON.stringify(jwt));
+            next();
+        }
+    
     }
     submitHandler = e =>{
         e.preventDefault();
@@ -21,6 +32,7 @@ class Login extends Component {
             email,
             password
         };
+        console.log(user)
         this.login(user)
         .then(data => {
             if(data.error){
@@ -28,7 +40,9 @@ class Login extends Component {
             }
             else {
                 //authenticate the user
-                //redirect
+                this.authenticate(data, ()=>{
+                    this.setState({redirectToReferer: true})
+                })
             }
         })
     }; 
@@ -76,7 +90,12 @@ class Login extends Component {
     
     render(){
 
-        const {email, password, error} = this.state;
+        const {email, password, error, redirectToReferer} = this.state;
+        const {navigate} = this.props;
+
+        if(redirectToReferer){
+            return <Redirect to = "/" />
+        }
 
         return (
             <div className='container'>
@@ -93,5 +112,9 @@ class Login extends Component {
             </div>
         )
     }
+    
 }
 export default Login;
+
+
+
