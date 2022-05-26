@@ -1,19 +1,17 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Home from './main/Home';
 import Register from './user/Register';
 import Login from './user/Login';
 
 const MainRouter = () => (
     <div>
-        <Routes>
-            <Route path = "/" element = {<Home/>}/>
-            <Route path = "/register" element = {<Register/>}/>
-            <Route path = "/login" element = {<Login/>}/>
+        <Switch>
+            <Route exact path = "/" component = {Home}/>
+            <Route exact path = "/register" component = {Register}/>
+            <Route exact path = "/login" component={Login}/>
         
-        </Routes>   
+        </Switch>   
     </div>
     )
-
-
 export default MainRouter;
