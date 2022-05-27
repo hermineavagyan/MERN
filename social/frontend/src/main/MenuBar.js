@@ -43,7 +43,7 @@ const MenuBar = ({history})=> (
                         <li className="nav-item" style = {{marginLeft: "50%"}}>
                         <Link
                             to={`/user/${isAuthenticated().user._id}`}
-                            style={{color: "#fff"}}
+                            style={isActive(history, `/user/${isAuthenticated().user._id}`)}
                             className="nav-link">
                             {`${isAuthenticated().user.name}'s profile`}
                         </Link>
