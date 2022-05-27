@@ -13,3 +13,12 @@ export const  read = (userId, token) =>{
     .catch (err => console.log(err))
 
 };
+export const usersList = () =>{
+    return fetch('http://localhost:8080/users', {
+        method: "GET",
+    })
+    .then(res=> {
+        return res.json()
+    })
+    .catch (err => console.log(err))
+}
