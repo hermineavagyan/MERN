@@ -41,21 +41,6 @@ class Register extends Component {
         })
     }; 
     
-    // register = (user) =>(
-    //     fetch('http://localhost:8080/signup', {
-    //         method: "POST",
-    //         headers: {
-    //             Accept: "application/json",
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(user)
-    //     })
-    //     .then (res =>{
-    //         return res.json()
-    //     })
-    //     .catch(err => console.log(err))
-    // );
-
     registerFormHandler = (name, email, password)=>(
         <form>
                     <div className='form-group'>

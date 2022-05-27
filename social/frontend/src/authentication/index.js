@@ -1,5 +1,6 @@
 export const register = (user) =>(
-    fetch('http://localhost:8080/signup', {
+   
+    fetch( 'http://localhost:8080/signup', {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -14,7 +15,7 @@ export const register = (user) =>(
 );
 
 export const login = (user) =>(
-    fetch('http://localhost:8080/signin', {
+    fetch( 'http://localhost:8080/signin', {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -40,7 +41,7 @@ export const logout = (next) => {
         localStorage.removeItem("jwt")
     }
     next()
-    return fetch("http://localhost:8080/signout",
+    return fetch( 'http://localhost:8080/signout',
         {method: "GET"})
         .then(res => {
             console.log('signout',res)
