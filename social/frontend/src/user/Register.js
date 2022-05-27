@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {register} from '../authentication';
 
 class Register extends Component {
@@ -91,7 +92,8 @@ class Register extends Component {
                 <div 
                     className='alert alert-info' 
                     style = {{display: open? "" : "none"}}>
-                    Account is successfully created. Please login.
+                    Account is successfully created. Please 
+                    <Link to = "/login">Login</Link>
                 </div>
                 {this.registerFormHandler(name, email, password)}
                 
