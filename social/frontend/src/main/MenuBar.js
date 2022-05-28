@@ -46,12 +46,12 @@ const MenuBar = ({history})=> (
                 isAuthenticated() && (
                     <>
                         <li className="nav-item">
-                            <a className="nav-link" 
+                            <span className="nav-link" 
                                 style = {(isActive(history, "/register"), 
                                     {cursor: "pointer", color: "#fff"})}
                                 onClick = {()=>logout(()=>history.push('/')) }>
                             Logout
-                            </a>
+                            </span>
                         </li>
                         <li className="nav-item" style = {{marginLeft: "50%"}}>
                         <Link
