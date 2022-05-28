@@ -6,6 +6,7 @@ import Login from './user/Login';
 import MenuBar from './main/MenuBar';
 import Profile from "./user/Profile";
 import Users from './user/Users';
+import EditProfile from './user/EditProfile';
 
 const MainRouter = () => (
     <div>
@@ -15,6 +16,7 @@ const MainRouter = () => (
             <Route exact path = "/users" component={Users}/>
             <Route exact path = "/register" component = {Register}/>
             <Route exact path = "/login" component={Login}/>
+            <Route exact path = "/user/edit/:userId" component={EditProfile}/>
             <Route exact path = "/user/:userId" component={Profile}/>
             
         
