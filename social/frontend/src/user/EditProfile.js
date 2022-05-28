@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {isAuthenticated} from '../authentication';
-import {read} from './getUser';
+import {read,update} from './getUser';
 import {Redirect} from 'react-router-dom';
 
 class EditProfile extends Component{
@@ -12,7 +12,8 @@ class EditProfile extends Component{
             name: "",
             email: "",
             password: "",
-            redirectToProfile: false
+            redirectToProfile: false,
+            error: ""
         }
     }
 
@@ -29,7 +30,8 @@ class EditProfile extends Component{
                     {
                         id: data._id, 
                         name: data.name, 
-                        email: data.email
+                        email: data.email,
+                        error: ""
                     })
             }
         })
@@ -40,33 +42,56 @@ class EditProfile extends Component{
         this.init(userId)
         
     }
+
+    isValid = ()=>{
+
+        const {name, email, password} = this.state
+
+        if(name.length == 0){
+            this.setState({error: "Name is required"})
+            return false;
+        }
+        
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            this.setState({error: "A valid email is required"})
+            return false;
+        }
+        
+        if(password.length >= 1 && password.length <=7){
+            this.setState({error: "Password must be at least 8 characters long"})
+            return false;
+        }
+        return true;
+        
+    }
     onChangeHandler = (name) => (e)=>{
         this.setState({[name]: e.target.value})
     }
     submitHandler = e =>{
         e.preventDefault();
-        const {name, email, password} = this.state;
-        const user = {
-            name,
-            email,
-            password
-        };
-        console.log(user);
-        // register(user)
-        // .then(data => {
-        //     if(data.error){
-        //         this.setState({error: data.error})
-        //     }
-        //     else {
-        //         this.setState({
-        //             error: "",
-        //             name: "",
-        //             email: "",
-        //             password: "",
-        //             open: true
-        //         })
-        //     }
-        // })
+        if(this.isValid()){
+            const {name, email, password} = this.state;
+            const user = {
+                name,
+                email,
+                password: password || undefined
+            };
+            console.log(user);
+    
+            const userId = this.props.match.params.userId;
+            const token = isAuthenticated().token;
+            update(userId, token, user)
+            .then(data => {
+                if(data.error){
+                    this.setState({error: data.error})
+                }
+                else {
+                    this.setState({
+                        redirectToProfile: true
+                    })
+                }
+            })
+        }
     }; 
     registerFormHandler = (name, email, password)=>(
         <form>
@@ -102,10 +127,19 @@ class EditProfile extends Component{
                 </form>
     )
     render() {
-        const {name, email, password } = this.state;
+        const {id, name, email, password, redirectToProfile, error } = this.state;
+            if(redirectToProfile){
+                return <Redirect to = {`/user/${id}`}/>
+            }
+        
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Edit Profile</h2>
+                <div 
+                    className='alert alert-danger' 
+                    style = {{display: error? "" : "none"}}>
+                    {error}
+                </div>
                 {this.registerFormHandler(name, email, password)}
             </div>
     )}
