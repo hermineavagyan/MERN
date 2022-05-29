@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {isAuthenticated} from '../authentication';
 import {read,update} from './getUser';
 import {Redirect} from 'react-router-dom';
+import DefaultProfileImage from '../images/avatar.jpg'
 
 class EditProfile extends Component{
 
@@ -13,7 +14,9 @@ class EditProfile extends Component{
             email: "",
             password: "",
             redirectToProfile: false,
-            error: ""
+            error: "",
+            fileSize: 0,
+            loading: false
         }
     }
 
@@ -46,9 +49,17 @@ class EditProfile extends Component{
 
     isValid = ()=>{
 
-        const {name, email, password} = this.state
+        const {name, email, password, fileSize} = this.state
 
-        if(name.length == 0){
+        if (fileSize > 1000000) {
+            this.setState({
+                error: "File size should be less than 100kb",
+                loading: false
+            });
+            return false;
+        }
+
+        if(name.length === 0){
             this.setState({error: "Name is required"})
             return false;
         }
@@ -58,38 +69,41 @@ class EditProfile extends Component{
             return false;
         }
         
-        if(password.length >= 1 && password.length <=7){
-            this.setState({error: "Password must be at least 8 characters long"})
+        if(password.length >= 1 && password.length <=5){
+            this.setState({error: "Password must be at least 6 characters long"})
             return false;
         }
         return true;
         
     }
+    // onChangeHandler = name => event => {
+    //     const value = name === "photo" ? event.target.files[0] : event.target.value;
+    //     this.userData.set(name, value)
+    //     this.setState({[name]: value})
+    // };
     onChangeHandler = name => event => {
-        let value = name === "photo" ? event.target.files[0] : event.target.value;
-        this.userData.set(name, value)
-        this.setState({[name]: value})
+        this.setState({ error: "" });
+        const value = name === "photo" ? event.target.files[0] : event.target.value;
+        const fileSize = name === "photo" ? event.target.files[0].size : 0;
+        this.userData.set(name, value);
+        this.setState({ [name]: value, fileSize });    
     };
+
     submitHandler = e =>{
         e.preventDefault();
+        this.setState({loading: true})
 
         if(this.isValid()){
-            const {name, email, password} = this.state;
-            const user = {
-                name,
-                email,
-                password: password || undefined
-            };
-            console.log(user);
-    
+
             const userId = this.props.match.params.userId;
             const token = isAuthenticated().token;
 
-            update(userId, token, this.userData)
-            .then(data => {
+            update(userId, token, this.userData).then(data => {
                 if(data.error){
                     this.setState({error: data.error})
                 }
+                
+
                 else {
                     this.setState({
                         redirectToProfile: true
@@ -142,11 +156,14 @@ class EditProfile extends Component{
                 </form>
     )
     render() {
-        const {id, name, email, password, redirectToProfile, error } = this.state;
+        const {id, name, email, password, redirectToProfile, error, loading } = this.state;
             if(redirectToProfile){
                 return <Redirect to = {`/user/${id}`}/>
             }
-        
+            const photoUrl = id ? 
+            `http://localhost:8080/user/photo/${id}?${new Date().getTime()}` 
+            : DefaultProfileImage
+            
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Edit Profile</h2>
@@ -155,6 +172,19 @@ class EditProfile extends Component{
                     style = {{display: error? "" : "none"}}>
                     {error}
                 </div>
+                {
+                    loading ? 
+                    (<div className="jumbotron text center">
+                        <h2>Loading...</h2>
+                    </div>)
+                    :("")
+                }
+                <img 
+                    style={{ height: "200px", width: "auto" }}
+                    className="img-thumbnail"
+                    src = {photoUrl} 
+                    alt = {name}
+                />
                 {this.registerFormHandler(name, email, password)}
             </div>
     )}

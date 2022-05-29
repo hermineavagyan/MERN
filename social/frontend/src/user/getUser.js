@@ -38,8 +38,27 @@ export const usersList = () =>{
     .catch (err => console.log(err))
 }
 
-export const  update = (userId, token, user) =>{
-    console.log("Userdata update", user)
+// export const update= (userId, token, user) => {
+//     console.log("Userdata update", user)
+//     return fetch(`http://localhost:8080/user/${userId}`, {
+//         method: "PUT",
+//         headers: {
+//             Accept: "application/json",
+//             Authorization: `Bearer ${token}`
+//         },
+//         body: user
+        
+//     })
+//     .then(res => {
+//         return res.json()
+//     })
+    
+//     .catch (err => console.log(err))
+
+// };
+
+export const update = (userId, token, user) => {
+    console.log("USER DATA UPDATE: ", user);
     return fetch(`http://localhost:8080/user/${userId}`, {
         method: "PUT",
         headers: {
@@ -47,12 +66,9 @@ export const  update = (userId, token, user) =>{
             Authorization: `Bearer ${token}`
         },
         body: user
-        
     })
-    .then(res=> {
-        return res.json()
-    })
-    
-    .catch (err => console.log(err))
-
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };
