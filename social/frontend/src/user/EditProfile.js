@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {isAuthenticated} from '../authentication';
-import {read,update} from './getUser';
+import {read,update, updateUserInLocalStorage} from './getUser';
 import {Redirect} from 'react-router-dom';
 import DefaultProfileImage from '../images/avatar.jpg'
 
@@ -16,10 +16,11 @@ class EditProfile extends Component{
             redirectToProfile: false,
             error: "",
             fileSize: 0,
-            loading: false
+            loading: false, 
+            about: ""
         }
     }
-
+    //read from the backend
     init = (userId) => {
         const token = isAuthenticated().token;
         read(userId, token)
@@ -34,7 +35,8 @@ class EditProfile extends Component{
                         id: data._id, 
                         name: data.name, 
                         email: data.email,
-                        error: ""
+                        error: "",
+                        about: data.about
                     })
             }
         })
@@ -60,17 +62,17 @@ class EditProfile extends Component{
         }
 
         if(name.length === 0){
-            this.setState({error: "Name is required"})
+            this.setState({error: "Name is required", loading: false})
             return false;
         }
         
         if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            this.setState({error: "A valid email is required"})
+            this.setState({error: "A valid email is required", loading: false})
             return false;
         }
         
         if(password.length >= 1 && password.length <=5){
-            this.setState({error: "Password must be at least 6 characters long"})
+            this.setState({error: "Password must be at least 6 characters long", loading: false})
             return false;
         }
         return true;
@@ -105,14 +107,16 @@ class EditProfile extends Component{
                 
 
                 else {
-                    this.setState({
-                        redirectToProfile: true
+                    updateUserInLocalStorage(data, () =>{
+                        this.setState({
+                            redirectToProfile: true
+                        })
                     })
                 }
             })
         }
     }; 
-    registerFormHandler = (name, email, password)=>(
+    registerFormHandler = (name, email, password, about)=>(
         <form>
                     <div className='form-group'>
                         <label className='text-muted'>Profile Photo</label>
@@ -141,7 +145,15 @@ class EditProfile extends Component{
                             className='form-control'
                             value = {email}
                         />
-                        
+                    </div>
+                    <div className='form-group'>
+                        <label className='text-muted'>About</label>
+                        <textarea 
+                            onChange={this.onChangeHandler("about")} 
+                            type = "text" 
+                            className='form-control'
+                            value = {about}
+                        />
                     </div>
                     <div className='form-group'>
                         <label className='text-muted'>password</label>
@@ -156,7 +168,7 @@ class EditProfile extends Component{
                 </form>
     )
     render() {
-        const {id, name, email, password, redirectToProfile, error, loading } = this.state;
+        const {id, name, email, password, redirectToProfile, error, loading, about } = this.state;
             if(redirectToProfile){
                 return <Redirect to = {`/user/${id}`}/>
             }
@@ -182,10 +194,11 @@ class EditProfile extends Component{
                 <img 
                     style={{ height: "200px", width: "auto" }}
                     className="img-thumbnail"
-                    src = {photoUrl} 
+                    src = {photoUrl}
+                    onError = {i => (i.target.src = `${DefaultProfileImage}`)}
                     alt = {name}
                 />
-                {this.registerFormHandler(name, email, password)}
+                {this.registerFormHandler(name, email, password, about)}
             </div>
     )}
 }
