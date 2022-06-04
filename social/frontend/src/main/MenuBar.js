@@ -45,13 +45,21 @@ const MenuBar = ({history})=> (
             {
                 isAuthenticated() && (
                     <>
-                        <li className="nav-item">
-                            <span className="nav-link" 
-                                style = {(isActive(history, "/register"), 
-                                    {cursor: "pointer", color: "#fff"})}
-                                onClick = {()=>logout(()=>history.push('/')) }>
-                            Logout
-                            </span>
+                        <li className="nav-item" >
+                        <Link
+                            to={`/findpeople`}
+                            style={isActive(history, `/findpeople`)}
+                            className="nav-link">
+                            Find People
+                        </Link>
+                        </li>
+                        <li className="nav-item" >
+                        <Link
+                            to={`/post/create`}
+                            style={isActive(history, `/post/create`)}
+                            className="nav-link">
+                            Create Post
+                        </Link>
                         </li>
                         <li className="nav-item" style = {{marginLeft: "50%"}}>
                         <Link
@@ -61,10 +69,19 @@ const MenuBar = ({history})=> (
                             {`${isAuthenticated().user.name}'s profile`}
                         </Link>
                         </li>
+                        
                     </>
+                    
                     )
             }
-            
+            <li className="nav-item">
+                            <span className="nav-link" 
+                                style = {(isActive(history, "/register"), 
+                                    {cursor: "pointer", color: "#fff"})}
+                                onClick = {()=>logout(()=>history.push('/')) }>
+                            Logout
+                            </span>
+                        </li>
         </ul>
     </div>
 );
