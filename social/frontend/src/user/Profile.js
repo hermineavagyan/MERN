@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {isAuthenticated} from '../authentication';
 import {Redirect, Link} from 'react-router-dom';
-import DefaultProfileImage from '../images/avatar.jpg'
+import DefaultProfileImage from '../images/avatar.jpg';
 import {read} from './getUser';
 import DeleteUser from "./DeleteUser";
 import FollowProfileButton from "./FollowProfileButton";
-
+import ProfileTabs from "./ProfileTabs";
 
 class Profile extends Component {
     constructor(){
@@ -81,12 +81,6 @@ class Profile extends Component {
                 <h2 className="mt-5 mb-5">Profile</h2>
                 <div className="row">
                     <div className="col-md-6">
-                    {/* <img 
-                        className="card-img-top" 
-                        src={DefaultProfileImage} 
-                        alt={user.name}
-                        style = {{width: '100%', height: '15vw', objectFit: "cover"}}
-                    /> */}
                     <img 
                     style={{ height: "200px", width: "auto" }}
                     className="img-thumbnail"
@@ -121,7 +115,6 @@ class Profile extends Component {
                             onButtonClick = {this.clickFollowButton}
                         />
                     )}
-                    
                     </div>
                 </div>
                 <div className="row">
@@ -129,6 +122,9 @@ class Profile extends Component {
                     <hr/>
                     <p className="lead">{user.about}</p>
                     <hr/>
+                    <ProfileTabs 
+                        followers = {user.followers} 
+                        following = {user.following}/>
                     </div>
                 </div>
             </div>

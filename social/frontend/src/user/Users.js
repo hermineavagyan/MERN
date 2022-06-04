@@ -25,12 +25,6 @@ class Users extends Component {
         <div className='row'>
         {users.map((user, i) => (
             <div className="card col-md-4" key = {i}>
-            {/* <img 
-                className="card-img-top" 
-                src={DefaultProfileImage} 
-                alt={user.name}
-                style = {{width: '100%', height: '15vw', objectFit: "cover"}}
-            /> */}
             <img 
                     style={{ height: "200px", width: "auto" }}
                     className="img-thumbnail"
