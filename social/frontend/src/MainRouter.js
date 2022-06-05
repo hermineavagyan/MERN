@@ -10,6 +10,7 @@ import EditProfile from './user/EditProfile';
 import PrivateRoute from './authentication/PrivateRoute';
 import FindPeople from './user/FindPeople';
 import NewPost from './post/NewPost';
+import SinglePost from './post/SinglePost';
 
 
 const MainRouter = () => (
@@ -17,6 +18,7 @@ const MainRouter = () => (
         <MenuBar />
         <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/post/:postId" component={SinglePost} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
