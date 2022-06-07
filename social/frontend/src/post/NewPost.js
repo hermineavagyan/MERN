@@ -79,42 +79,43 @@ class NewPost extends Component {
     };
     newPostForm = (title, body) => (
         <form>
-            <div className='form-group'>
-                <label className='text-muted'>Profile Photo</label>
+            <div className="form-group">
+                <label className="text-muted">Post Photo</label>
                 <input
                     onChange={this.onChangeHandler("photo")}
                     type="file"
                     accept="image/*"
-                    className='form-control'
-
+                    className="form-control"
                 />
             </div>
-            <div className='form-group'>
-                <label className='text-muted'>Title</label>
+            <div className="form-group">
+                <label className="text-muted">Title</label>
                 <input
                     onChange={this.onChangeHandler("title")}
                     type="text"
-                    className='form-control'
+                    className="form-control"
                     value={title}
                 />
             </div>
 
-            <div className='form-group'>
-                <label className='text-muted'>Body</label>
+            <div className="form-group">
+                <label className="text-muted">Body</label>
                 <textarea
                     onChange={this.onChangeHandler("body")}
                     type="text"
-                    className='form-control'
+                    className="form-control"
                     value={body}
                 />
             </div>
+
             <button
                 onClick={this.submitHandler}
-                className='btn btn-raised btn-primary'>
-                Create post
+                className="btn btn-raised btn-primary"
+            >
+                Create Post
             </button>
         </form>
-    )
+    );
     render() {
         const { title, body, photo, user, error, loading, redirectToProfile } = this.state;
         if (redirectToProfile) {
