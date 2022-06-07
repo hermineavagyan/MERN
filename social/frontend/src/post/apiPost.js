@@ -1,6 +1,7 @@
 export const create = (userId, token, post) => {
     return fetch(`http://localhost:8080/post/new/${userId}`, {
-        method: "POST", headers: {
+        method: "POST",
+        headers: {
             Accept: "application/json",
             Authorization: `Bearer ${token}`,
         },
@@ -29,6 +30,37 @@ export const singlePost = postId => {
             return response.json();
         })
         .catch(err => console.log(err));
+};
+
+export const postsListByUser = (userId, token) => {
+    return fetch(`http://localhost:8080/posts/by/${userId}`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(res => {
+            return res.json()
+        })
+        .catch(err => console.log(err))
+};
+
+export const removePost = (postId, token) => {
+    return fetch(`http://localhost:8080/post/${postId}`, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            return res.json()
+        })
+        .catch(err => console.log(err))
+
 };
 
 
