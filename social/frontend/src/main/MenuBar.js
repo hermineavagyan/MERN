@@ -74,18 +74,20 @@ const MenuBar = ({ history }) => (
                             </Link>
                         </li>
 
+                        <li className="nav-item">
+                            <span className="nav-link"
+                                style={(isActive(history, "/register"),
+                                    { cursor: "pointer", color: "#fff" })}
+                                onClick={() => logout(() => history.push('/'))}>
+                                Logout
+                            </span>
+                        </li>
+
                     </>
 
                 )
             }
-            <li className="nav-item">
-                <span className="nav-link"
-                    style={(isActive(history, "/register"),
-                        { cursor: "pointer", color: "#fff" })}
-                    onClick={() => logout(() => history.push('/'))}>
-                    Logout
-                </span>
-            </li>
+
         </ul>
     </div>
 );
