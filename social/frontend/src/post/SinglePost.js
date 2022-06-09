@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 // import post from '../../../nodeapi/models/post';
-import { singlePost, removePost } from './apiPost';
+import { singlePost, removePost, like, unlike } from './apiPost';
 import { isAuthenticated } from '../authentication';
 
 import { Link, Redirect } from 'react-router-dom';
@@ -11,7 +11,16 @@ class SinglePost extends Component {
 
     state = {
         post: '',
-        redirectToHome: false
+        redirectToHome: false,
+        redirectToLogin: false,
+        like: false,
+        likes: 0
+    }
+    checkLike = (likes) => {
+        const userId = isAuthenticated() && isAuthenticated().user._id;
+        let match = likes.indexOf(userId) !== -1
+        return match;
+
     }
     componentDidMount = () => {
         const postId = this.props.match.params.postId;
@@ -20,9 +29,34 @@ class SinglePost extends Component {
                 if (data.error) {
                     console.log(data.error)
                 }
-                this.setState({ post: data })
+                this.setState({
+                    post: data,
+                    likes: data.likes.length,
+                    like: this.checkLike(data.likes)
+                })
             })
     };
+    likeToggle = () => {
+        if (!isAuthenticated()) {
+            this.setState({ redirectToLogin: true })
+            return false
+        }
+        let callApi = this.state.like ? unlike : like
+        const userId = isAuthenticated().user._id
+        const postId = this.state.post._id
+        const token = isAuthenticated().token
+
+        callApi(userId, token, postId).then(data => {
+            if (data.error) {
+                console.log(data.error)
+            } else {
+                this.setState({
+                    like: !this.state.like,
+                    likes: data.likes.length
+                })
+            }
+        })
+    }
 
     deletePost = () => {
         const postId = this.props.match.params.postId;
@@ -50,6 +84,8 @@ class SinglePost extends Component {
         const posterName = post.postedBy
             ? post.postedBy.name
             : "Unknown"
+
+        const { like, likes } = this.state
         return (
             <div className="card-body">
                 <img
@@ -57,8 +93,30 @@ class SinglePost extends Component {
                     onError={i => (i.target.src = `${DefaultPostImage}`)}
                     alt={post.title}
                     className="img-thumbnail mb-3"
-                    style={{ height: '300px', width: "100%", objectFit: "cover" }} />
+                    style={{
+                        height: '300px',
+                        width: "100%",
+                        objectFit: "cover"
+                    }}
 
+                />
+                {like ? (
+                    <h3 onClick={this.likeToggle}>
+                        <i
+                            className="fa fa-thumbs-up text-success bg-dark"
+                            style={{ padding: '10px', borderRadius: '50%' }}
+                        />{' '}
+                        {likes} Like
+                    </h3>
+                ) : (
+                    <h3 onClick={this.likeToggle}>
+                        <i
+                            className="fa fa-thumbs-up text-warning bg-dark"
+                            style={{ padding: '10px', borderRadius: '50%' }}
+                        />{' '}
+                        {likes} Like
+                    </h3>
+                )}
                 <p className="card-text">{post.body}</p>
                 <br />
                 <p className='font-italic mark'>
@@ -98,11 +156,14 @@ class SinglePost extends Component {
 
 
     render() {
+        const { post, redirectToHome, redirectToLogin } = this.state
 
-        if (this.state.redirectToHome) {
+        if (redirectToHome) {
             return <Redirect to={`/`} />
+        } else if (redirectToLogin) {
+            return <Redirect to={`/login`} />
         }
-        const { post } = this.state
+
 
         return (
             <div className='container'>
