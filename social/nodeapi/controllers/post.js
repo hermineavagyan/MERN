@@ -4,23 +4,39 @@ const fs = require('fs');
 const _ = require('lodash');
 //let uuidv1 = require('uuidv1')
 
+// exports.postById = (req, res, next, id) => {
+//     Post.findById(id)
+//         .populate("postedBy", "_id name")
+//         //.populate('comments', 'text created ')
+//         .populate('comments.postedBy', '_id name ')
+//         .exec((err, post) => {
+//             if (err || !post) {
+//                 return res.status(400).json({
+//                     error: err
+//                 })
+//             }
+//             req.post = post
+//             next()
+
+//         })
+
+// }
 exports.postById = (req, res, next, id) => {
     Post.findById(id)
         .populate("postedBy", "_id name")
-        .populate('comments', 'text created ')
-        .populate('comments.postedBy', '_id name ')
+        .populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id name")
+        .select("_id title body created likes comments photo")
         .exec((err, post) => {
             if (err || !post) {
                 return res.status(400).json({
                     error: err
-                })
+                });
             }
-            req.post = post
-            next()
-
-        })
-
-}
+            req.post = post;
+            next();
+        });
+};
 
 exports.getPosts = (req, res) => {
     const posts = Post.find()

@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 // import post from '../../../nodeapi/models/post';
 import { singlePost, removePost, like, unlike } from './apiPost';
 import { isAuthenticated } from '../authentication';
-
 import { Link, Redirect } from 'react-router-dom';
-import DefaultPostImage from '../images/cherry_blossom.jpg'
+import DefaultPostImage from '../images/cherry_blossom.jpg';
+import Comment from './Comment';
 
 class SinglePost extends Component {
 
@@ -14,7 +14,8 @@ class SinglePost extends Component {
         redirectToHome: false,
         redirectToLogin: false,
         like: false,
-        likes: 0
+        likes: 0,
+        comments: []
     }
     checkLike = (likes) => {
         const userId = isAuthenticated() && isAuthenticated().user._id;
@@ -28,14 +29,21 @@ class SinglePost extends Component {
             .then(data => {
                 if (data.error) {
                     console.log(data.error)
+                } else {
+                    this.setState({
+                        post: data,
+                        likes: data.likes.length,
+                        like: this.checkLike(data.likes),
+                        comments: data.comments
+                    })
                 }
-                this.setState({
-                    post: data,
-                    likes: data.likes.length,
-                    like: this.checkLike(data.likes)
-                })
+
             })
     };
+
+    updateComments = comments => {
+        this.setState({ comments })
+    }
     likeToggle = () => {
         if (!isAuthenticated()) {
             this.setState({ redirectToLogin: true })
@@ -156,7 +164,7 @@ class SinglePost extends Component {
 
 
     render() {
-        const { post, redirectToHome, redirectToLogin } = this.state
+        const { post, redirectToHome, redirectToLogin, comments } = this.state
 
         if (redirectToHome) {
             return <Redirect to={`/`} />
@@ -172,9 +180,15 @@ class SinglePost extends Component {
                     !post ?
                         (<div className="jumbotron text center">
                             <h2>Loading...</h2>
-                        </div>)
-                        : this.renderPost(post)
-                }
+                        </div>
+                        ) : (
+                            this.renderPost(post)
+                        )}
+
+                <Comment
+                    postId={post._id}
+                    comments={comments}
+                    updateComments={this.updateComments} />
 
 
 
