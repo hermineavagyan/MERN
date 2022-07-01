@@ -24,9 +24,10 @@ const _ = require('lodash');
 exports.postById = (req, res, next, id) => {
     Post.findById(id)
         .populate("postedBy", "_id name")
-        .populate("comments.postedBy", "_id name")
+        // .populate("comments.postedBy", "_id name")
+        .populate("comments", "postedBy.name")
         .populate("postedBy", "_id name")
-        .select("_id title body created likes comments photo")
+        //.select("_id title body created likes comments photo")
         .exec((err, post) => {
             if (err || !post) {
                 return res.status(400).json({
@@ -42,7 +43,7 @@ exports.getPosts = (req, res) => {
     const posts = Post.find()
         .populate("postedBy", "_id name")
         .populate('comments', 'text created ')
-        // .populate('comments.postedBy', '_id name ')
+        .populate('comments.postedBy', '_id name ')
         .select("_id title body created likes")
         .sort({ created: -1 })
         .then((posts) => {
@@ -190,11 +191,12 @@ exports.unlike = (req, res) => {
 };
 exports.comment = (req, res) => {
     let comment = req.body.comment
-    comment.posteBy = req.body.userId
+    comment.postedBy = req.body.userId
     Post.findByIdAndUpdate(req.body.postId, {
         $push: { comments: comment }
     }, { new: true })
-        .populate('comments.postedBy', '_id name')
+        //.populate('comments.postedBy', '_id name')
+        .populate('comment.postedBy', '_id name')
         .populate('postedBy', '_id name')
         .exec((err, result) => {
             if (err) {
