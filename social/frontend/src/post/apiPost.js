@@ -109,6 +109,7 @@ export const unlike = (userId, token, postId) => {
         })
         .catch(err => console.log(err));
 };
+
 export const comment = (userId, token, postId, comment) => {
 
     return fetch(`http://localhost:8080/post/comment`, {
@@ -125,6 +126,7 @@ export const comment = (userId, token, postId, comment) => {
         })
         .catch(err => console.log(err));
 };
+
 export const uncomment = (userId, token, postId, comment) => {
 
     return fetch(`http://localhost:8080/post/uncomment`, {
