@@ -13,7 +13,7 @@
 //     }
 //     return null;
 // }
-//optimized T = O(n) complexity
+//optimized T = O(n), S = O(1) complexity
 function findNonRepeatingChar(str) {
     const hashTable = {}
     for (let i = 0; i < str.length; i++) {
