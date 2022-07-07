@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uuidv1 = require('uuidv1');
 const crypto = require('crypto');
-const {ObjectId}= mongoose.Schema
+const { ObjectId } = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     salt: String,
-    created:{
+    created: {
         type: Date,
         default: Date.now
     },
@@ -35,14 +35,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    following: [{type: ObjectId, ref: "User"}],
-    followers: [{type: ObjectId, ref: "User"}]
+    following: [{ type: ObjectId, ref: "User" }],
+    followers: [{ type: ObjectId, ref: "User" }],
+    resetPasswordLink: {
+        data: String,
+        default: ""
+    }
+
 })
 
 //virtual field
 userSchema
     .virtual("password")
-    .set(function(password) {
+    .set(function (password) {
         // create temporary variable called _password
         this._password = password;
         // generate a timestamp
@@ -50,17 +55,17 @@ userSchema
         // encryptPassword()
         this.hashed_password = this.encryptPassword(password);
     })
-    .get(function() {
+    .get(function () {
         return this._password;
     });
 
 // methods
 userSchema.methods = {
-    authenticate: function(plainText) {
+    authenticate: function (plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;
     },
 
-    encryptPassword: function(password) {
+    encryptPassword: function (password) {
         if (!password) return "";
         try {
             return crypto
