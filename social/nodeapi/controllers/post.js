@@ -24,10 +24,10 @@ const _ = require('lodash');
 exports.postById = (req, res, next, id) => {
     Post.findById(id)
         .populate("postedBy", "_id name")
-        // .populate("comments.postedBy", "_id name")
-        .populate("comments", "postedBy.name")
+        .populate("comments.postedBy", "_id name")
         .populate("postedBy", "_id name")
-        //.select("_id title body created likes comments photo")
+        //.populate("postedBy", "_id name")
+        .select("_id title body created likes comments photo")
         .exec((err, post) => {
             if (err || !post) {
                 return res.status(400).json({
@@ -43,7 +43,7 @@ exports.getPosts = (req, res) => {
     const posts = Post.find()
         .populate("postedBy", "_id name")
         .populate('comments', 'text created ')
-        .populate('comments.postedBy', '_id name ')
+        //.populate('comments.postedBy', '_id name ')
         .select("_id title body created likes")
         .sort({ created: -1 })
         .then((posts) => {
@@ -118,9 +118,14 @@ exports.updatePost = (req, res, next) => {
             })
         }
         //save post with the updated info
-        let post = req.post
-        post = _.extend(post, fields)
-        post.updated = Date.now()
+        // let post = req.post
+        // post = _.extend(post, fields)
+        // post.updated = Date.now()
+
+        let post = new Post(fields)
+        req.profile.hashed_password = undefined;
+        req.profile.salt = undefined;
+        post.postedBy = req.profile;
 
         if (files.photo) {
             post.photo.data = fs.readFileSync(files.photo.filepath)
@@ -195,7 +200,6 @@ exports.comment = (req, res) => {
     Post.findByIdAndUpdate(req.body.postId, {
         $push: { comments: comment }
     }, { new: true })
-        //.populate('comments.postedBy', '_id name')
         .populate('comment.postedBy', '_id name')
         .populate('postedBy', '_id name')
         .exec((err, result) => {
