@@ -11,14 +11,15 @@ class Comment extends Component {
     }
 
     handleChange = event => {
+        this.setState({ error: "" })
         this.setState({ text: event.target.value })
     };
 
     isValid = () => {
-        const text = this.state
+        const { text } = this.state
         if (!text.length > 0 || text.length > 150) {
             this.setState({
-                error: "Comment should not be empty and less than 150 charactrs long"
+                error: "Comment should not be empty or more than 150 charactrs long"
             });
             return false;
 
@@ -27,6 +28,10 @@ class Comment extends Component {
     }
     addComment = e => {
         e.preventDefault();
+        if (!isAuthenticated()) {
+            this.setState({ error: "Please login to leave a comment" })
+            return false;
+        }
         if (this.isValid()) {
             const userId = isAuthenticated().user._id;
             const token = isAuthenticated().token;
@@ -44,8 +49,38 @@ class Comment extends Component {
                     }
                 })
         }
+    }
+
+    deleteComment = (comment) => {
+        // const postId = this.props.match.params.postId;
+        // const token = isAuthenticated().token;
+        // removePost(postId, token).then(data => {
+        //     if (data.error) {
+        //         console.log(data.error)
+        //     } else {
+        //         this.setState({ redirectToHome: true })
+        //     }
+        // })
+        const userId = isAuthenticated().user._id;
+        const token = isAuthenticated().token;
+        const postId = this.props.postId;
 
 
+        uncomment(userId, token, postId, comment)
+            .then(data => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    //dispatch fresh list of comments to parent component(SinglePost)
+                    this.props.updateComments(data.comments);
+                }
+            })
+    };
+    deleteConfirmed = (comment) => {
+        let answer = window.confirm("Are you sure you want to delete your comment?")
+        if (answer) {
+            this.deleteComment(comment);
+        }
     }
     render() {
         const { comments } = this.props;
@@ -69,6 +104,7 @@ class Comment extends Component {
 
                     </div>
                 </form>
+                {/* {JSON.stringify(comments)} */}
                 <div
                     className='alert alert-danger'
                     style={{ display: error ? "" : "none" }}>
@@ -109,24 +145,16 @@ class Comment extends Component {
                                         {new Date(
                                             comment.created
                                         ).toDateString()}
-                                        {/* <span>
-                                            {isAuthenticated().user &&
-                                                isAuthenticated().user._id ===
-                                                    comment.postedBy._id && (
-                                                    <>
-                                                        <span
-                                                            onClick={() =>
-                                                                this.deleteConfirmed(
-                                                                    comment
-                                                                )
-                                                            }
-                                                            className="text-danger float-right mr-1"
-                                                        >
-                                                            Remove
-                                                        </span>
-                                                    </>
-                                                )}
-                                        </span> */}
+                                        {isAuthenticated().user &&
+                                            isAuthenticated().user._id === comment.postedBy._id &&
+                                            <>
+
+                                                <span
+                                                    onClick={() => this.deleteConfirmed(comment)}
+                                                    className="text-danger float-right mr-1">
+                                                    Remove
+                                                </span>
+                                            </>}
                                     </p>
                                 </div>
                             </div>
